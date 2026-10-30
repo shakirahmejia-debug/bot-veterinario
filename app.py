@@ -14,7 +14,7 @@ KB = load_kb()
 # Diccionario de palabras clave que la gente usa comunmente
 SYNONYMS = {
     "rasca": "prurito_intenso", "rascando": "prurito_intenso", "comezon": "prurito_intenso", "comezón": "prurito_intenso",
-    "pelo": "alopecia", "pelado": "alopecia", "calvo": "alopecia",
+    "pelo": "alopecia", "pelado": "alopecia", "pelada": "alopecia", "peladas": "alopecia", "calvo": "alopecia", "piel": "alopecia",
     "vomita": "vomito_persistente", "vomito": "vomito_persistente", "vómito": "vomito_persistente",
     "diarrea": "diarrea_sangre", "popo": "diarrea_sangre", "caca": "diarrea_sangre",
     "cojea": "cojera_repentina", "pata": "cojera_repentina", "renquea": "cojera_repentina",
@@ -39,21 +39,30 @@ def extract_symptoms(user_text):
     user_text = user_text.lower()
     matched = set()
     
-    # 1. Buscar coincidencias exactas de las palabras populares o médicas en el texto
+    # 1. Buscar coincidencias exactas (BLINDADO contra errores si falta la palabra "popular")
     for key, data in KB["signs"].items():
-        if data["popular"].lower() in user_text or data["label"].lower() in user_text:
+        label = data.get("label", "").lower()
+        popular = data.get("popular", label).lower() # Si no hay popular, usa label
+        
+        if popular and popular in user_text:
+            matched.add(key)
+        elif label and label in user_text:
             matched.add(key)
             
     # 2. Buscar por palabras individuales (por si escriben "rascándose" en vez de "rasca")
     words = user_text.split()
     searchable_terms = {}
     for key, data in KB["signs"].items():
-        searchable_terms[data["popular"].lower()] = key
-        searchable_terms[data["label"].lower()] = key
+        label = data.get("label", "")
+        popular = data.get("popular", label)
+        if popular:
+            searchable_terms[popular.lower()] = key
+        if label:
+            searchable_terms[label.lower()] = key
         
     for word in words:
         if len(word) > 3:
-            # difflib busca palabras similares (ej: "rascando" se parece a "rasca")
+            # difflib busca palabras similares
             matches = difflib.get_close_matches(word, searchable_terms.keys(), n=1, cutoff=0.65)
             if matches:
                 matched.add(searchable_terms[matches[0]])
@@ -86,14 +95,12 @@ if st.session_state.result is None:
 
         st.subheader("2. Motivo y signos")
         
-        # El motivo sigue siendo un menú para saber qué exámenes sugerir
         complaint = st.selectbox(
             "Zona principal afectada *",
             list(KB["complaints"].keys()),
             format_func=lambda x: KB["complaints"][x]["label"],
         )
         
-        # AQUI ESTA EL CAMBIO: Ahora es un cuadro de texto libre
         user_symptoms_text = st.text_area(
             "Describa con sus palabras lo que le pasa a su mascota *",
             placeholder="Ejemplo: mi perro se rasca mucho, tiene el pelo pelado y le duele la barriga...",
@@ -106,14 +113,13 @@ if st.session_state.result is None:
         if not user_symptoms_text.strip():
             st.error("Por favor, escriba los síntomas que observa.")
         else:
-            # Extraemos los síntomas del texto
             signs = extract_symptoms(user_symptoms_text)
             
             if not signs:
                 st.error("No pudimos entender los síntomas exactos. Intente usar palabras más simples (ej: 'rasca', 'vomita', 'cojea', 'sangra').")
             else:
                 # Mostramos qué entendió el sistema para que el usuario confíe
-                st.info(f"El sistema detectó los siguientes síntomas: {', '.join([KB['signs'][s]['popular'] for s in signs])}")
+                st.info(f"El sistema detectó los siguientes síntomas: {', '.join([KB['signs'][s].get('popular', KB['signs'][s]['label']) for s in signs])}")
 
                 urgency = "verde"
                 for s in signs:
