@@ -1,100 +1,160 @@
 {
   "meta": {
-    "version": "0.1.0",
+    "version": "2.1.0",
     "jurisdiction": "Colombia",
     "disclaimer": "Esta herramienta es un orientador de urgencias y organizador de información. No es un diagnóstico ni una consulta veterinaria. No administre medicamentos sin indicación de un veterinario. Si su mascota empeora, acuda a urgencias.",
     "anti_charlatan": "Desconfíe de diagnósticos sin exámenes y de tratamientos milagro. Exija un veterinario titulado con tarjeta profesional."
   },
   "species": ["perro", "gato"],
-  "red_flags_always": ["disnea", "convulsion", "colapso", "sangrado", "intoxicacion", "golpe_calor", "mucosas_palidas"],
+  "red_flags_always": ["disnea", "convulsion", "colapso", "sangrado", "intoxicacion", "golpe_calor", "mucosas_palidas", "gato_orina"],
   "actions": {
     "rojo": "Acuda de inmediato a un servicio de urgencias veterinarias.",
     "amarillo": "Solicite una cita veterinaria prioritaria en 24-48 horas. Si empeora, acuda a urgencias.",
     "verde": "Agende una consulta veterinaria programada. Mientras tanto, observe signos de alarma."
   },
   "signs": {
-    "disnea": {"label": "Dificultad para respirar o esfuerzo respiratorio", "urgency": "rojo"},
-    "convulsion": {"label": "Convulsión (primera o repetida)", "urgency": "rojo"},
-    "colapso": {"label": "Colapso o no puede mantenerse en pie", "urgency": "rojo"},
-    "sangrado": {"label": "Sangrado abundante o herida grave", "urgency": "rojo"},
-    "intoxicacion": {"label": "Sospecha de intoxicación", "urgency": "rojo"},
-    "golpe_calor": {"label": "Golpe de calor (jadeo excesivo, debilidad, temperatura alta)", "urgency": "rojo"},
-    "mucosas_palidas": {"label": "Encías pálidas, blancas o azuladas", "urgency": "rojo"},
-    "gato_orina": {"label": "Gato macho: intento de orinar sin éxito", "urgency": "rojo"},
-    "prurito_intenso": {"label": "Prurito intenso que no cede", "urgency": "amarillo"},
-    "alopecia": {"label": "Alopecia o lesiones de piel", "urgency": "amarillo"},
-    "otitis": {"label": "Otitis (dolor de oído, sacudidas de cabeza)", "urgency": "amarillo"},
-    "costras": {"label": "Costras o descamación", "urgency": "amarillo"},
-    "vomito_persistente": {"label": "Vómitos o diarrea persistentes con decaimiento", "urgency": "amarillo"},
-    "diarrea_sangre": {"label": "Diarrea con sangre", "urgency": "amarillo"},
-    "decaimiento": {"label": "Decaimiento o cambio de comportamiento", "urgency": "amarillo"},
-    "dolor_abdominal": {"label": "Dolor abdominal", "urgency": "amarillo"},
-    "cojera_repentina": {"label": "Cojera repentina sin mejora", "urgency": "amarillo"},
-    "cojera_grave": {"label": "Cojera grave o no apoya la extremidad", "urgency": "amarillo"},
-    "dolor_al_tocar": {"label": "Dolor al tocar la zona", "urgency": "amarillo"},
-    "tos": {"label": "Tos persistente", "urgency": "amarillo"},
-    "estornudos": {"label": "Estornudos persistentes", "urgency": "verde"},
-    "sangre_orina": {"label": "Sangre en la orina", "urgency": "amarillo"},
-    "dificultad_orinar": {"label": "Dificultad para orinar (sin ser gato macho)", "urgency": "amarillo"},
-    "desorientacion": {"label": "Desorientación o temblores", "urgency": "amarillo"},
-    "prevencion": {"label": "Solo prevención / chequeo", "urgency": "verde"}
+    "disnea": {"label": "Dificultad para respirar", "popular": "Se ahoga, respira rápido o le silba el pecho", "urgency": "rojo"},
+    "convulsion": {"label": "Convulsión", "popular": "Le dan ataques, temblores fuertes o se queda rígido", "urgency": "rojo"},
+    "colapso": {"label": "Colapso", "popular": "Se desmaya, no se puede levantar o está muy débil", "urgency": "rojo"},
+    "sangrado": {"label": "Hemorragia", "popular": "Sangra mucho por una herida o no para de sangrar", "urgency": "rojo"},
+    "intoxicacion": {"label": "Intoxicación", "popular": "Comió veneno, medicinas de humanos o algo tóxico", "urgency": "rojo"},
+    "golpe_calor": {"label": "Golpe de calor", "popular": "Jadea mucho, está muy caliente y débil por el calor", "urgency": "rojo"},
+    "mucosas_palidas": {"label": "Encías pálidas", "popular": "Tiene las encías blancas, azules o muy pálidas", "urgency": "rojo"},
+    "gato_orina": {"label": "Obstrucción urinaria felina", "popular": "Es gato macho y hace fuerza para orinar pero no sale nada", "urgency": "rojo"},
+    "prurito_intenso": {"label": "Prurito intenso", "popular": "Se rasca mucho, se muerde o se lame sin parar", "urgency": "amarillo"},
+    "alopecia": {"label": "Alopecia", "popular": "Se le cae el pelo o tiene peladuras", "urgency": "amarillo"},
+    "otitis": {"label": "Otitis", "popular": "Le duele el oído, se rasca las orejas o sacude la cabeza", "urgency": "amarillo"},
+    "costras": {"label": "Costras o descamación", "popular": "Tiene costras, caspa o la piel se le ve escamosa", "urgency": "amarillo"},
+    "vomito_persistente": {"label": "Vómito persistente", "popular": "Vomita mucho, no retiene la comida o está decaído", "urgency": "amarillo"},
+    "diarrea_sangre": {"label": "Diarrea con sangre", "popular": "Hace popó líquida con sangre", "urgency": "amarillo"},
+    "decaimiento": {"label": "Decaimiento", "popular": "Está triste, no juega, no come o está muy quieto", "urgency": "amarillo"},
+    "dolor_abdominal": {"label": "Dolor abdominal", "popular": "Le duele la barriga, se queja al tocarlo o está inflamado", "urgency": "amarillo"},
+    "cojera_repentina": {"label": "Cojera", "popular": "Cojea, renquea o no apoya bien la pata", "urgency": "amarillo"},
+    "cojera_grave": {"label": "Cojera grave", "popular": "No apoya la pata para nada o la arrastra", "urgency": "amarillo"},
+    "dolor_al_tocar": {"label": "Dolor localizado", "popular": "Le duele cuando lo tocan o se queja al moverlo", "urgency": "amarillo"},
+    "tos": {"label": "Tos", "popular": "Tose mucho, como si tuviera algo en la garganta", "urgency": "amarillo"},
+    "estornudos": {"label": "Estornudos", "popular": "Estornuda mucho o le sale moco por la nariz", "urgency": "verde"},
+    "sangre_orina": {"label": "Hematuria", "popular": "Hace pipí con sangre o de color rojizo", "urgency": "amarillo"},
+    "dificultad_orinar": {"label": "Disuria", "popular": "Le cuesta hacer pipí, hace poquito o se queja al orinar", "urgency": "amarillo"},
+    "desorientacion": {"label": "Desorientación", "popular": "Se ve perdido, camina raro o choca con las cosas", "urgency": "amarillo"},
+    "prevencion": {"label": "Prevención", "popular": "Viene solo a chequeo, vacunas o desparasitación", "urgency": "verde"},
+    "fiebre": {"label": "Fiebre", "popular": "Está caliente, tiene fiebre o temblores", "urgency": "amarillo"},
+    "perdida_peso": {"label": "Pérdida de peso", "popular": "Está adelgazando mucho sin razón", "urgency": "amarillo"},
+    "sed_excesiva": {"label": "Polidipsia", "popular": "Toma mucha agua de repente", "urgency": "amarillo"},
+    "orina_excesiva": {"label": "Poliuria", "popular": "Hace pipí muy seguido o en grandes cantidades", "urgency": "amarillo"},
+    "ictericia": {"label": "Ictericia", "popular": "Tiene los ojos, encías o piel amarillenta", "urgency": "rojo"}
   },
   "complaints": {
-    "prurito": {"label": "Prurito / problemas de piel", "signs": ["prurito_intenso", "alopecia", "otitis", "costras"]},
-    "digestivo": {"label": "Vómito / diarrea", "signs": ["vomito_persistente", "diarrea_sangre", "decaimiento", "dolor_abdominal"]},
-    "cojera": {"label": "Cojera / dolor", "signs": ["cojera_repentina", "cojera_grave", "dolor_al_tocar"]},
-    "respiratorio": {"label": "Dificultad respiratoria / tos", "signs": ["tos", "estornudos"]},
-    "urinario": {"label": "Problemas para orinar", "signs": ["gato_orina", "sangre_orina", "dificultad_orinar"]},
-    "neuro": {"label": "Convulsiones / neurológico", "signs": ["convulsion", "desorientacion"]},
-    "intoxicacion": {"label": "Sospecha de intoxicación", "signs": ["intoxicacion"]},
+    "prurito": {"label": "Problemas de piel (rascado, pelo, orejas)", "signs": ["prurito_intenso", "alopecia", "otitis", "costras"]},
+    "digestivo": {"label": "Problemas de barriga (vómito, diarrea)", "signs": ["vomito_persistente", "diarrea_sangre", "decaimiento", "dolor_abdominal"]},
+    "cojera": {"label": "Problemas de huesos o patas (cojera)", "signs": ["cojera_repentina", "cojera_grave", "dolor_al_tocar"]},
+    "respiratorio": {"label": "Problemas respiratorios (tos, moco)", "signs": ["tos", "estornudos", "disnea"]},
+    "urinario": {"label": "Problemas para orinar", "signs": ["gato_orina", "sangre_orina", "dificultad_orinar", "orina_excesiva"]},
+    "neuro": {"label": "Ataques o problemas de nervios", "signs": ["convulsion", "desorientacion"]},
+    "intoxicacion": {"label": "Comió algo tóxico o veneno", "signs": ["intoxicacion"]},
     "golpe_calor": {"label": "Golpe de calor", "signs": ["golpe_calor"]},
-    "prevencion": {"label": "Prevención / chequeo", "signs": ["prevencion"]}
+    "sistemico": {"label": "Problemas generales (fiebre, peso, sed)", "signs": ["fiebre", "perdida_peso", "sed_excesiva", "ictericia"]},
+    "prevencion": {"label": "Solo chequeo o vacunas", "signs": ["prevencion"]}
   },
   "differentials": {
     "prurito": [
       {"disease": "Sarna sarcóptica (Sarcoptes scabiei)", "source": "[Dermatología, cap. 4, p. 23-27]"},
-      {"disease": "Dermatitis por alergia a las pulgas", "source": "[Dermatología, cap. 5, p. 28-34]"},
+      {"disease": "Dermatitis por alergia a las pulgas (DAP)", "source": "[Dermatología, cap. 5, p. 28-34]"},
       {"disease": "Dermatitis atópica", "source": "[Dermatología, cap. 6, p. 35-44]"},
       {"disease": "Dermatitis por Malassezia", "source": "[Dermatología, cap. 7, p. 45-48]"},
       {"disease": "Cheyletiellosis", "source": "[Dermatología, cap. 8, p. 49-53]"},
-      {"disease": "Dermatofitosis", "source": "[Dermatología, cap. 9-10, p. 54-66]"},
+      {"disease": "Dermatofitosis (Tiña)", "source": "[Dermatología, cap. 9-10, p. 54-66]"},
       {"disease": "Reacción adversa a alimentos", "source": "[Dermatología, cap. 11, p. 67-74]"},
       {"disease": "Demodicosis", "source": "[Dermatología, cap. 26, p. 154-160]"},
       {"disease": "Pioderma estafilocócico", "source": "[Dermatología, cap. 27, p. 161-168]"}
     ],
     "digestivo": [
-      {"disease": "Gastroenteritis infecciosa o parasitaria", "source": "[Dermatología, cap. 11, p. 67-74]"},
-      {"disease": "Reacción adversa a alimentos", "source": "[Dermatología, cap. 11, p. 67-74]"},
-      {"disease": "Cuerpo extraño o irritación gastrointestinal", "source": "[Atlas de anatomía, sección IV; Dosificación, advertencias]"}
+      {"disease": "Parvovirus canino", "source": "[Fenner's, cap. 12, p. 225-234]"},
+      {"disease": "Panleucopenia felina", "source": "[Fenner's, cap. 12, p. 228-230]"},
+      {"disease": "Gastroenteritis bacteriana o parasitaria", "source": "[Dermatología, cap. 11]"},
+      {"disease": "Cuerpo extraño gastrointestinal", "source": "[Atlas de anatomía, sección IV]"},
+      {"disease": "Pancreatitis", "source": "[Control del dolor, cap. 1; Dosificación]"}
     ],
     "cojera": [
-      {"disease": "Lesión ortopédica (fractura, luxación, artritis)", "source": "[Control del dolor, cap. 5, p. 32-60; Atlas de anatomía, sección VI]"},
-      {"disease": "Dolor postraumático o inflamatorio", "source": "[Control del dolor, cap. 5, p. 32-60]"}
+      {"disease": "Displasia de cadera o artrosis", "source": "[Control del dolor, cap. 5]"},
+      {"disease": "Fractura o luxación", "source": "[Atlas de anatomía, sección VI]"},
+      {"disease": "Rotura de ligamento cruzado", "source": "[Control del dolor, cap. 5]"},
+      {"disease": "Panostitis", "source": "[Control del dolor, cap. 5]"}
+    ],
+    "respiratorio": [
+      {"disease": "Moquillo canino (Distemper)", "source": "[Fenner's, cap. 17]"},
+      {"disease": "Tos de las perreras", "source": "[Fenner's, cap. 9-10]"},
+      {"disease": "Complejo respiratorio felino (Herpes/Calici)", "source": "[Fenner's, cap. 9-10]"},
+      {"disease": "Asma felino", "source": "[Fenner's, cap. 32]"}
+    ],
+    "urinario": [
+      {"disease": "Obstrucción uretral felina", "source": "[Atlas de anatomía, sección V]"},
+      {"disease": "Cistitis idiopática felina", "source": "[Atlas de anatomía, sección V]"},
+      {"disease": "Urolitiasis (cálculos)", "source": "[Atlas de anatomía, sección V]"},
+      {"disease": "Insuficiencia renal", "source": "[Fenner's, cap. 32; Dosificación]"}
+    ],
+    "neuro": [
+      {"disease": "Epilepsia idiopática", "source": "[Fenner's, cap. 32; Dosificación]"},
+      {"disease": "Moquillo canino (fase neurológica)", "source": "[Fenner's, cap. 17]"},
+      {"disease": "Toxoplasmosis", "source": "[Fenner's, cap. 30]"},
+      {"disease": "Hernia discal", "source": "[Atlas de anatomía, sección II]"}
+    ],
+    "intoxicacion": [
+      {"disease": "Intoxicación por rodenticidas", "source": "[Dosificación]"},
+      {"disease": "Intoxicación por fármacos humanos", "source": "[Dosificación]"},
+      {"disease": "Intoxicación por plantas o chocolate", "source": "[Dosificación]"}
+    ],
+    "golpe_calor": [
+      {"disease": "Hipertermia / Golpe de calor", "source": "[Control del dolor, cap. 1; Dosificación]"}
+    ],
+    "sistemico": [
+      {"disease": "Diabetes mellitus", "source": "[Dosificación, Insulina]"},
+      {"disease": "Hiperadrenocorticismo (Cushing)", "source": "[Dermatología, cap. 22]"},
+      {"disease": "Hipotiroidismo", "source": "[Dermatología, cap. 22]"},
+      {"disease": "Leishmaniosis", "source": "[Fenner's, cap. 30]"}
     ]
   },
   "exams": {
     "prurito": [
-      {"exam": "Raspados cutáneos profundos", "source": "[Dermatología, cap. 2, p. 6-15]"},
-      {"exam": "Análisis de pelo y cepillado de la capa", "source": "[Dermatología, cap. 2, p. 6-15]"},
-      {"exam": "Citología (frotis o cinta de acetato)", "source": "[Dermatología, cap. 2, p. 6-15]"},
-      {"exam": "Examen con lámpara de Wood", "source": "[Dermatología, cap. 2, p. 6-15]"},
-      {"exam": "Cultivo fúngico", "source": "[Dermatología, cap. 2, p. 6-15]"},
-      {"exam": "ELISA de IgG para Sarcoptes (si se sospecha sarna)", "source": "[Dermatología, cap. 2, p. 6-15; cap. 4, p. 23-27]"},
-      {"exam": "Tricografía", "source": "[Dermatología, cap. 2, p. 6-15]"},
-      {"exam": "Histopatología (si no hay diagnóstico)", "source": "[Dermatología, cap. 2, p. 6-15]"}
+      {"exam": "Raspados cutáneos profundos", "source": "[Dermatología, cap. 2]"},
+      {"exam": "Citología (frotis o cinta de acetato)", "source": "[Dermatología, cap. 2]"},
+      {"exam": "Examen con lámpara de Wood", "source": "[Dermatología, cap. 2]"},
+      {"exam": "Cultivo fúngico", "source": "[Dermatología, cap. 2]"},
+      {"exam": "ELISA de IgG para Sarcoptes", "source": "[Dermatología, cap. 2]"}
     ],
     "digestivo": [
-      {"exam": "Hemograma", "source": "[Fenner's, cap. 5, p. 101-123; Dosificación, advertencias]"},
-      {"exam": "Perfil bioquímico sérico", "source": "[Fenner's, cap. 5, p. 101-123; Dosificación, advertencias]"},
-      {"exam": "Análisis de orina", "source": "[Fenner's, cap. 5, p. 101-123]"},
-      {"exam": "Coprológico (flotación/sedimentación)", "source": "[Dermatología, cap. 11, p. 67-74]"},
-      {"exam": "Ecografía abdominal", "source": "[Atlas de anatomía, sección IV]"},
-      {"exam": "Radiografía abdominal", "source": "[Atlas de anatomía, sección IV]"}
+      {"exam": "Hemograma y perfil bioquímico", "source": "[Fenner's, cap. 5; Dosificación]"},
+      {"exam": "Coprológico", "source": "[Dermatología, cap. 11]"},
+      {"exam": "Ecografía o Radiografía abdominal", "source": "[Atlas de anatomía, sección IV]"},
+      {"exam": "Prueba rápida de Parvovirus", "source": "[Fenner's, cap. 12]"}
     ],
     "cojera": [
-      {"exam": "Examen ortopédico completo", "source": "[Control del dolor, cap. 5, p. 32-60]"},
-      {"exam": "Radiografía de la extremidad", "source": "[Atlas de anatomía, sección VI]"},
-      {"exam": "Hemograma y perfil bioquímico si se requieren antiinflamatorios", "source": "[Dosificación, advertencias; Control del dolor, cap. 5]"}
+      {"exam": "Examen ortopédico completo", "source": "[Control del dolor, cap. 5]"},
+      {"exam": "Radiografía de la extremidad", "source": "[Atlas de anatomía, sección VI]"}
+    ],
+    "respiratorio": [
+      {"exam": "Radiografía torácica", "source": "[Atlas de anatomía, sección III]"},
+      {"exam": "PCR para virus respiratorios", "source": "[Fenner's, cap. 5]"}
+    ],
+    "urinario": [
+      {"exam": "Análisis de orina", "source": "[Fenner's, cap. 5]"},
+      {"exam": "Ecografía abdominal", "source": "[Atlas de anatomía, sección V]"},
+      {"exam": "Perfil renal", "source": "[Dosificación]"}
+    ],
+    "neuro": [
+      {"exam": "Examen neurológico completo", "source": "[Fenner's, cap. 32]"},
+      {"exam": "Resonancia magnética (RM) o Tomografía (TC)", "source": "[Fenner's, cap. 5]"}
+    ],
+    "intoxicacion": [
+      {"exam": "Hemograma, perfil bioquímico y electrolitos", "source": "[Dosificación]"}
+    ],
+    "golpe_calor": [
+      {"exam": "Hemograma, electrolitos y perfil bioquímico", "source": "[Dosificación]"}
+    ],
+    "sistemico": [
+      {"exam": "Hemograma completo", "source": "[Dosificación]"},
+      {"exam": "Perfil bioquímico (renal, hepático, glucosa)", "source": "[Dosificación]"},
+      {"exam": "Análisis de orina", "source": "[Dosificación]"}
     ]
   },
   "while_you_go": {
