@@ -1,5 +1,6 @@
 import json
 import streamlit as st
+import difflib
 
 st.set_page_config(page_title="Orientador de urgencias veterinarias", page_icon="🐾", layout="centered")
 
@@ -9,6 +10,60 @@ def load_kb():
         return json.load(f)
 
 KB = load_kb()
+
+# Diccionario de palabras clave que la gente usa comunmente
+SYNONYMS = {
+    "rasca": "prurito_intenso", "rascando": "prurito_intenso", "comezon": "prurito_intenso", "comezón": "prurito_intenso",
+    "pelo": "alopecia", "pelado": "alopecia", "calvo": "alopecia",
+    "vomita": "vomito_persistente", "vomito": "vomito_persistente", "vómito": "vomito_persistente",
+    "diarrea": "diarrea_sangre", "popo": "diarrea_sangre", "caca": "diarrea_sangre",
+    "cojea": "cojera_repentina", "pata": "cojera_repentina", "renquea": "cojera_repentina",
+    "no come": "decaimiento", "no quiere comer": "decaimiento", "decaido": "decaimiento", "decaído": "decaimiento", "triste": "decaimiento",
+    "respira": "disnea", "ahoga": "disnea", "asfixia": "disnea",
+    "tos": "tos", "tose": "tos",
+    "orina": "dificultad_orinar", "pipi": "dificultad_orinar", "hace pipi": "dificultad_orinar",
+    "sangre": "sangrado", "sangra": "sangrado", "hemorragia": "sangrado", "herida": "sangrado",
+    "convulsion": "convulsion", "ataque": "convulsion", "temblor": "convulsion",
+    "desmaya": "colapso", "desmayo": "colapso", "no se levanta": "colapso",
+    "caliente": "fiebre", "fiebre": "fiebre",
+    "agua": "sed_excesiva", "sed": "sed_excesiva",
+    "amarillo": "ictericia", "ojos amarillos": "ictericia",
+    "veneno": "intoxicacion", "toxica": "intoxicacion", "tóxico": "intoxicacion",
+    "calor": "golpe_calor", "insolación": "golpe_calor"
+}
+
+def extract_symptoms(user_text):
+    if not user_text:
+        return []
+    
+    user_text = user_text.lower()
+    matched = set()
+    
+    # 1. Buscar coincidencias exactas de las palabras populares o médicas en el texto
+    for key, data in KB["signs"].items():
+        if data["popular"].lower() in user_text or data["label"].lower() in user_text:
+            matched.add(key)
+            
+    # 2. Buscar por palabras individuales (por si escriben "rascándose" en vez de "rasca")
+    words = user_text.split()
+    searchable_terms = {}
+    for key, data in KB["signs"].items():
+        searchable_terms[data["popular"].lower()] = key
+        searchable_terms[data["label"].lower()] = key
+        
+    for word in words:
+        if len(word) > 3:
+            # difflib busca palabras similares (ej: "rascando" se parece a "rasca")
+            matches = difflib.get_close_matches(word, searchable_terms.keys(), n=1, cutoff=0.65)
+            if matches:
+                matched.add(searchable_terms[matches[0]])
+                
+    # 3. Buscar sinónimos comunes
+    for syn, key in SYNONYMS.items():
+        if syn in user_text:
+            matched.add(key)
+
+    return list(matched)
 
 st.title("🐾 Orientador de urgencias veterinarias")
 st.caption("Herramienta de orientación para dueños de perros y gatos. No es diagnóstico ni consulta veterinaria.")
@@ -30,45 +85,57 @@ if st.session_state.result is None:
             repro = st.selectbox("Estado reproductivo *", ["entero", "castrado", "gestante", "lactante", "no aplica"])
 
         st.subheader("2. Motivo y signos")
+        
+        # El motivo sigue siendo un menú para saber qué exámenes sugerir
         complaint = st.selectbox(
-            "Motivo principal *",
+            "Zona principal afectada *",
             list(KB["complaints"].keys()),
             format_func=lambda x: KB["complaints"][x]["label"],
         )
-        sign_options = list(dict.fromkeys(KB["complaints"][complaint]["signs"] + KB["red_flags_always"]))
-        signs = st.multiselect(
-            "Seleccione los signos que observa *",
-            sign_options,
-            format_func=lambda x: KB["signs"][x]["label"],
+        
+        # AQUI ESTA EL CAMBIO: Ahora es un cuadro de texto libre
+        user_symptoms_text = st.text_area(
+            "Describa con sus palabras lo que le pasa a su mascota *",
+            placeholder="Ejemplo: mi perro se rasca mucho, tiene el pelo pelado y le duele la barriga...",
+            height=100
         )
 
         submitted = st.form_submit_button("Evaluar orientación")
 
     if submitted:
-        if not signs:
-            st.error("Debe seleccionar al menos un signo.")
+        if not user_symptoms_text.strip():
+            st.error("Por favor, escriba los síntomas que observa.")
         else:
-            urgency = "verde"
-            for s in signs:
-                if KB["signs"][s]["urgency"] == "rojo":
+            # Extraemos los síntomas del texto
+            signs = extract_symptoms(user_symptoms_text)
+            
+            if not signs:
+                st.error("No pudimos entender los síntomas exactos. Intente usar palabras más simples (ej: 'rasca', 'vomita', 'cojea', 'sangra').")
+            else:
+                # Mostramos qué entendió el sistema para que el usuario confíe
+                st.info(f"El sistema detectó los siguientes síntomas: {', '.join([KB['signs'][s]['popular'] for s in signs])}")
+
+                urgency = "verde"
+                for s in signs:
+                    if KB["signs"][s]["urgency"] == "rojo":
+                        urgency = "rojo"
+                        break
+                    if KB["signs"][s]["urgency"] == "amarillo" and urgency != "rojo":
+                        urgency = "amarillo"
+
+                if species == "gato" and "gato_orina" in signs:
                     urgency = "rojo"
-                    break
-                if KB["signs"][s]["urgency"] == "amarillo" and urgency != "rojo":
-                    urgency = "amarillo"
 
-            if species == "gato" and "gato_orina" in signs:
-                urgency = "rojo"
+                differentials = KB["differentials"].get(complaint, []) if urgency != "rojo" else []
+                exams = KB["exams"].get(complaint, []) if urgency != "rojo" else []
 
-            differentials = KB["differentials"].get(complaint, []) if urgency != "rojo" else []
-            exams = KB["exams"].get(complaint, []) if urgency != "rojo" else []
-
-            st.session_state.result = {
-                "species": species, "weight": weight, "age": age, "sex": sex, "repro": repro,
-                "complaint": complaint, "signs": signs, "urgency": urgency,
-                "differentials": differentials, "exams": exams,
-                "while": KB["while_you_go"][urgency],
-            }
-            st.rerun()
+                st.session_state.result = {
+                    "species": species, "weight": weight, "age": age, "sex": sex, "repro": repro,
+                    "complaint": complaint, "signs": signs, "urgency": urgency,
+                    "differentials": differentials, "exams": exams,
+                    "while": KB["while_you_go"][urgency],
+                }
+                st.rerun()
 
 if st.session_state.result is not None:
     r = st.session_state.result
