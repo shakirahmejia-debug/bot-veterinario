@@ -1,0 +1,118 @@
+{
+  "meta": {
+    "version": "0.1.0",
+    "jurisdiction": "Colombia",
+    "disclaimer": "Esta herramienta es un orientador de urgencias y organizador de información. No es un diagnóstico ni una consulta veterinaria. No administre medicamentos sin indicación de un veterinario. Si su mascota empeora, acuda a urgencias.",
+    "anti_charlatan": "Desconfíe de diagnósticos sin exámenes y de tratamientos milagro. Exija un veterinario titulado con tarjeta profesional."
+  },
+  "species": ["perro", "gato"],
+  "red_flags_always": ["disnea", "convulsion", "colapso", "sangrado", "intoxicacion", "golpe_calor", "mucosas_palidas"],
+  "actions": {
+    "rojo": "Acuda de inmediato a un servicio de urgencias veterinarias.",
+    "amarillo": "Solicite una cita veterinaria prioritaria en 24-48 horas. Si empeora, acuda a urgencias.",
+    "verde": "Agende una consulta veterinaria programada. Mientras tanto, observe signos de alarma."
+  },
+  "signs": {
+    "disnea": {"label": "Dificultad para respirar o esfuerzo respiratorio", "urgency": "rojo"},
+    "convulsion": {"label": "Convulsión (primera o repetida)", "urgency": "rojo"},
+    "colapso": {"label": "Colapso o no puede mantenerse en pie", "urgency": "rojo"},
+    "sangrado": {"label": "Sangrado abundante o herida grave", "urgency": "rojo"},
+    "intoxicacion": {"label": "Sospecha de intoxicación", "urgency": "rojo"},
+    "golpe_calor": {"label": "Golpe de calor (jadeo excesivo, debilidad, temperatura alta)", "urgency": "rojo"},
+    "mucosas_palidas": {"label": "Encías pálidas, blancas o azuladas", "urgency": "rojo"},
+    "gato_orina": {"label": "Gato macho: intento de orinar sin éxito", "urgency": "rojo"},
+    "prurito_intenso": {"label": "Prurito intenso que no cede", "urgency": "amarillo"},
+    "alopecia": {"label": "Alopecia o lesiones de piel", "urgency": "amarillo"},
+    "otitis": {"label": "Otitis (dolor de oído, sacudidas de cabeza)", "urgency": "amarillo"},
+    "costras": {"label": "Costras o descamación", "urgency": "amarillo"},
+    "vomito_persistente": {"label": "Vómitos o diarrea persistentes con decaimiento", "urgency": "amarillo"},
+    "diarrea_sangre": {"label": "Diarrea con sangre", "urgency": "amarillo"},
+    "decaimiento": {"label": "Decaimiento o cambio de comportamiento", "urgency": "amarillo"},
+    "dolor_abdominal": {"label": "Dolor abdominal", "urgency": "amarillo"},
+    "cojera_repentina": {"label": "Cojera repentina sin mejora", "urgency": "amarillo"},
+    "cojera_grave": {"label": "Cojera grave o no apoya la extremidad", "urgency": "amarillo"},
+    "dolor_al_tocar": {"label": "Dolor al tocar la zona", "urgency": "amarillo"},
+    "tos": {"label": "Tos persistente", "urgency": "amarillo"},
+    "estornudos": {"label": "Estornudos persistentes", "urgency": "verde"},
+    "sangre_orina": {"label": "Sangre en la orina", "urgency": "amarillo"},
+    "dificultad_orinar": {"label": "Dificultad para orinar (sin ser gato macho)", "urgency": "amarillo"},
+    "desorientacion": {"label": "Desorientación o temblores", "urgency": "amarillo"},
+    "prevencion": {"label": "Solo prevención / chequeo", "urgency": "verde"}
+  },
+  "complaints": {
+    "prurito": {"label": "Prurito / problemas de piel", "signs": ["prurito_intenso", "alopecia", "otitis", "costras"]},
+    "digestivo": {"label": "Vómito / diarrea", "signs": ["vomito_persistente", "diarrea_sangre", "decaimiento", "dolor_abdominal"]},
+    "cojera": {"label": "Cojera / dolor", "signs": ["cojera_repentina", "cojera_grave", "dolor_al_tocar"]},
+    "respiratorio": {"label": "Dificultad respiratoria / tos", "signs": ["tos", "estornudos"]},
+    "urinario": {"label": "Problemas para orinar", "signs": ["gato_orina", "sangre_orina", "dificultad_orinar"]},
+    "neuro": {"label": "Convulsiones / neurológico", "signs": ["convulsion", "desorientacion"]},
+    "intoxicacion": {"label": "Sospecha de intoxicación", "signs": ["intoxicacion"]},
+    "golpe_calor": {"label": "Golpe de calor", "signs": ["golpe_calor"]},
+    "prevencion": {"label": "Prevención / chequeo", "signs": ["prevencion"]}
+  },
+  "differentials": {
+    "prurito": [
+      {"disease": "Sarna sarcóptica (Sarcoptes scabiei)", "source": "[Dermatología, cap. 4, p. 23-27]"},
+      {"disease": "Dermatitis por alergia a las pulgas", "source": "[Dermatología, cap. 5, p. 28-34]"},
+      {"disease": "Dermatitis atópica", "source": "[Dermatología, cap. 6, p. 35-44]"},
+      {"disease": "Dermatitis por Malassezia", "source": "[Dermatología, cap. 7, p. 45-48]"},
+      {"disease": "Cheyletiellosis", "source": "[Dermatología, cap. 8, p. 49-53]"},
+      {"disease": "Dermatofitosis", "source": "[Dermatología, cap. 9-10, p. 54-66]"},
+      {"disease": "Reacción adversa a alimentos", "source": "[Dermatología, cap. 11, p. 67-74]"},
+      {"disease": "Demodicosis", "source": "[Dermatología, cap. 26, p. 154-160]"},
+      {"disease": "Pioderma estafilocócico", "source": "[Dermatología, cap. 27, p. 161-168]"}
+    ],
+    "digestivo": [
+      {"disease": "Gastroenteritis infecciosa o parasitaria", "source": "[Dermatología, cap. 11, p. 67-74]"},
+      {"disease": "Reacción adversa a alimentos", "source": "[Dermatología, cap. 11, p. 67-74]"},
+      {"disease": "Cuerpo extraño o irritación gastrointestinal", "source": "[Atlas de anatomía, sección IV; Dosificación, advertencias]"}
+    ],
+    "cojera": [
+      {"disease": "Lesión ortopédica (fractura, luxación, artritis)", "source": "[Control del dolor, cap. 5, p. 32-60; Atlas de anatomía, sección VI]"},
+      {"disease": "Dolor postraumático o inflamatorio", "source": "[Control del dolor, cap. 5, p. 32-60]"}
+    ]
+  },
+  "exams": {
+    "prurito": [
+      {"exam": "Raspados cutáneos profundos", "source": "[Dermatología, cap. 2, p. 6-15]"},
+      {"exam": "Análisis de pelo y cepillado de la capa", "source": "[Dermatología, cap. 2, p. 6-15]"},
+      {"exam": "Citología (frotis o cinta de acetato)", "source": "[Dermatología, cap. 2, p. 6-15]"},
+      {"exam": "Examen con lámpara de Wood", "source": "[Dermatología, cap. 2, p. 6-15]"},
+      {"exam": "Cultivo fúngico", "source": "[Dermatología, cap. 2, p. 6-15]"},
+      {"exam": "ELISA de IgG para Sarcoptes (si se sospecha sarna)", "source": "[Dermatología, cap. 2, p. 6-15; cap. 4, p. 23-27]"},
+      {"exam": "Tricografía", "source": "[Dermatología, cap. 2, p. 6-15]"},
+      {"exam": "Histopatología (si no hay diagnóstico)", "source": "[Dermatología, cap. 2, p. 6-15]"}
+    ],
+    "digestivo": [
+      {"exam": "Hemograma", "source": "[Fenner's, cap. 5, p. 101-123; Dosificación, advertencias]"},
+      {"exam": "Perfil bioquímico sérico", "source": "[Fenner's, cap. 5, p. 101-123; Dosificación, advertencias]"},
+      {"exam": "Análisis de orina", "source": "[Fenner's, cap. 5, p. 101-123]"},
+      {"exam": "Coprológico (flotación/sedimentación)", "source": "[Dermatología, cap. 11, p. 67-74]"},
+      {"exam": "Ecografía abdominal", "source": "[Atlas de anatomía, sección IV]"},
+      {"exam": "Radiografía abdominal", "source": "[Atlas de anatomía, sección IV]"}
+    ],
+    "cojera": [
+      {"exam": "Examen ortopédico completo", "source": "[Control del dolor, cap. 5, p. 32-60]"},
+      {"exam": "Radiografía de la extremidad", "source": "[Atlas de anatomía, sección VI]"},
+      {"exam": "Hemograma y perfil bioquímico si se requieren antiinflamatorios", "source": "[Dosificación, advertencias; Control del dolor, cap. 5]"}
+    ]
+  },
+  "while_you_go": {
+    "rojo": {
+      "do": ["Mantenga la calma y hable suave.", "Abrigue a su mascota y manténgala en un lugar tranquilo y oscuro.", "Use una caja de transporte rígida (gatos) o una manta/camilla (perros).", "Vigile la respiración y el color de las encías.", "Si hay sangrado, aplique presión directa con gasa limpia y no retire el apósito empapado.", "Si hay convulsión, aleje objetos peligrosos, no la sujete y cronometre.", "Si hay sospecha de intoxicación, lleve el envase o muestra del producto."],
+      "dont": ["No administre medicamentos, ni humanos ni caseros.", "No fuerce comida ni agua.", "No induzca el vómito.", "No aplique torniquete salvo hemorragia masiva incontrolable.", "No manipule fracturas ni abdomen agudo.", "No deje sola a su mascota."],
+      "bring": ["El envase del producto si sospecha intoxicación.", "Una manta o toalla.", "Los datos del paciente (peso, edad, medicación).", "Este resumen."]
+    },
+    "amarillo": {
+      "do": ["Registre la frecuencia y duración de los signos.", "Tome fotos o videos de las lesiones o del comportamiento.", "Anote apetito, sed, orina y heces.", "Mantenga agua limpia si no hay vómito.", "Aísle a su mascota si sospecha contagio y lávese las manos."],
+      "dont": ["No administre medicamentos sin indicación veterinaria.", "No cambie la dieta ni dé suplementos nuevos.", "No bañe ni aplique productos tópicos sin diagnóstico.", "No someta a esfuerzos ni estrés."],
+      "bring": ["Fotos y videos de las lesiones.", "Muestra de heces u orina si es posible.", "Lista de medicamentos actuales.", "Este resumen."]
+    },
+    "verde": {
+      "do": ["Agende una consulta veterinaria programada.", "Mantenga vacunas, desparasitación y control de pulgas/garrapatas según indicación veterinaria.", "Observe cualquier cambio y anótelo."],
+      "dont": ["No automedique.", "No use productos milagro.", "No posponga la consulta si aparece un signo de alarma."],
+      "bring": ["Carné de vacunas.", "Este resumen."]
+    }
+  },
+  "summary_template": "RESUMEN PARA EL VETERINARIO\nEspecie: {species} | Peso: {weight} kg | Edad: {age} años | Sexo: {sex} | Estado reproductivo: {repro}\nMotivo: {complaint}\nSignos: {signs}\nNivel de urgencia: {urgency}\nPosibles problemas compatibles: {differentials}\nExámenes que suelen solicitarse: {exams}\nAdvertencia: esta orientación no reemplaza la consulta veterinaria."
+}
